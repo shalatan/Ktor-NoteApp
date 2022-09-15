@@ -1,1 +1,1 @@
-web: build/install/note-app/bin/note-app
+web: ./build/install/note-app/bin/note-app

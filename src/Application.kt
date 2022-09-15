@@ -4,6 +4,7 @@ import com.shalatan.data.checkPasswordForEmail
 import com.shalatan.data.routes.logInRoute
 import com.shalatan.data.routes.notesRoutes
 import com.shalatan.data.routes.registerRoute
+import com.shalatan.data.routes.testingRoute
 import io.ktor.application.*
 import io.ktor.auth.*
 import io.ktor.features.*
@@ -30,6 +31,7 @@ fun Application.module(testing: Boolean = false) {
         registerRoute()
         logInRoute()
         notesRoutes()
+        testingRoute()
     }
 //    CoroutineScope(Dispatchers.IO).launch {
 //        print("AAA CheckIfUserExists ${checkIfUserExists("abc")}\n")
