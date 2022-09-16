@@ -8,7 +8,7 @@ import io.ktor.routing.*
 fun Route.testingRoute() {
     route("/testing") {
         get {
-            call.respond(HttpStatusCode.OK,"Theek Hei ??")
+            call.respond(HttpStatusCode.OK,"Theek Hei Na Be ??")
         }
     }
 }

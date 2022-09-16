@@ -1,38 +1,52 @@
 package com.shalatan
 
-//import com.shalatan.data.checkPasswordForEmail
-import com.shalatan.data.routes.logInRoute
-import com.shalatan.data.routes.notesRoutes
-import com.shalatan.data.routes.registerRoute
 import com.shalatan.data.routes.testingRoute
 import io.ktor.application.*
 import io.ktor.auth.*
 import io.ktor.features.*
 import io.ktor.gson.*
 import io.ktor.routing.*
+import io.ktor.server.engine.*
+import io.ktor.server.netty.*
 
-fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
-
-@Suppress("unused") // Referenced in application.conf
-@kotlin.jvm.JvmOverloads
-fun Application.module(testing: Boolean = false) {
-    install(DefaultHeaders)
-    install(CallLogging)
-    install(ContentNegotiation) {
-        gson {
-            setPrettyPrinting()
+fun main() {
+    embeddedServer(Netty, port = 8080, host = "0.0.0.0") {
+        install(DefaultHeaders)
+        install(CallLogging)
+        install(ContentNegotiation) {
+            gson {
+                setPrettyPrinting()
+            }
         }
-    }
+        install(Routing) {
+//            registerRoute()
+//            logInRoute()
+//            notesRoutes()
+            testingRoute()
+        }
+    }.start(wait = true)
+}
+
+//@Suppress("unused") // Referenced in application.conf
+//@kotlin.jvm.JvmOverloads
+//fun Application.module(testing: Boolean = false) {
+//    install(DefaultHeaders)
+//    install(CallLogging)
+//    install(ContentNegotiation) {
+//        gson {
+//            setPrettyPrinting()
+//        }
+//    }
     //authenticate feature must be above routing feature
 //    install(Authentication) {
 //        configureAuth()
 //    }
-    install(Routing) {
-        registerRoute()
-        logInRoute()
-        notesRoutes()
-        testingRoute()
-    }
+//    install(Routing) {
+//        registerRoute()
+//        logInRoute()
+//        notesRoutes()
+//        testingRoute()
+//    }
 //    CoroutineScope(Dispatchers.IO).launch {
 //        print("AAA CheckIfUserExists ${checkIfUserExists("abc")}\n")
 //        print("AAA CheckIfPassWordMatches ${checkPasswordForEmail("abc", "abc")}\n")
@@ -47,7 +61,7 @@ fun Application.module(testing: Boolean = false) {
 //        )
 //        print("AAA Inserting Note${saveNote(newNote)}")
 //    }
-}
+//}
 
 ///**
 // * logic on how to authenticate the user
