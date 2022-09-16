@@ -5,25 +5,32 @@ import io.ktor.application.*
 import io.ktor.auth.*
 import io.ktor.features.*
 import io.ktor.gson.*
+import io.ktor.response.*
 import io.ktor.routing.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 
 fun main() {
-    embeddedServer(Netty, port = 8080, host = "0.0.0.0") {
-        install(DefaultHeaders)
-        install(CallLogging)
-        install(ContentNegotiation) {
-            gson {
-                setPrettyPrinting()
+    val port = System.getenv("PORT")?.toInt() ?: 23567
+    embeddedServer(Netty, port = port, host = "0.0.0.0") {
+        routing {
+            get(""){
+                call.respond("Thanks")
             }
         }
-        install(Routing) {
+//        install(DefaultHeaders)
+//        install(CallLogging)
+//        install(ContentNegotiation) {
+//            gson {
+//                setPrettyPrinting()
+//            }
+//        }
+//        install(Routing) {
 //            registerRoute()
 //            logInRoute()
 //            notesRoutes()
-            testingRoute()
-        }
+//            testingRoute()
+//        }
     }.start(wait = true)
 }
 
@@ -37,7 +44,7 @@ fun main() {
 //            setPrettyPrinting()
 //        }
 //    }
-    //authenticate feature must be above routing feature
+//authenticate feature must be above routing feature
 //    install(Authentication) {
 //        configureAuth()
 //    }
