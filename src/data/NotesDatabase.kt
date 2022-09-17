@@ -2,6 +2,7 @@ package com.shalatan.data
 
 import com.shalatan.data.collections.Note
 import com.shalatan.data.collections.User
+import com.shalatan.data.security.checkHashForPassword
 import org.litote.kmongo.contains
 import org.litote.kmongo.coroutine.coroutine
 import org.litote.kmongo.eq
@@ -22,9 +23,9 @@ suspend fun checkIfUserExists(email: String): Boolean {
     return users.findOne(User::email eq email) != null
 }
 
-suspend fun checkPasswordForEmail(email: String, password: String): Boolean {
+suspend fun checkPasswordForEmail(email: String, passwordToCheck: String): Boolean {
     val actualPasswordOfUser = users.findOne(User::email eq email)?.password ?: return false
-    return actualPasswordOfUser == password
+    return checkHashForPassword(passwordToCheck,actualPasswordOfUser)
 }
 
 suspend fun getNotesForUser(email: String): List<Note> {

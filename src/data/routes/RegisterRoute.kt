@@ -5,6 +5,7 @@ import com.shalatan.data.collections.User
 import com.shalatan.data.registerUser
 import com.shalatan.data.requests.AccountRequest
 import com.shalatan.data.responses.SimpleResponse
+import com.shalatan.data.security.getHashWithSalt
 import io.ktor.application.*
 import io.ktor.http.*
 import io.ktor.request.*
@@ -22,7 +23,7 @@ fun Route.registerRoute() {
             }
             val userExists = checkIfUserExists(request.email)
             if (!userExists) {
-                if (registerUser(User(request.email, request.password))) {
+                if (registerUser(User(request.email, getHashWithSalt(request.password)))) {
                     call.respond(HttpStatusCode.OK, SimpleResponse(true, "Account Successfully Created"))
                 } else {
                     call.respond(HttpStatusCode.OK, SimpleResponse(false, "Unknown Error"))
